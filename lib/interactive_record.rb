@@ -53,10 +53,10 @@ class InteractiveRecord
     DB[:conn].execute(sql)
   end
 
-  def self.find_by(attr={})
-    value = attr.values.first
+  def self.find_by(attr_hash)
+    value = attr_hash.values.first
     sanitized_value = value.class.to_s
-    sql = "SELECT * FROM #{self.table_name} WHERE #{attr.keys.first} = #{sanitized_value}"
+    sql = "SELECT * FROM #{self.table_name} WHERE #{attr_hash.keys.first} = #{sanitized_value}"
     DB[:conn].execute(sql)
   end
 
