@@ -2,7 +2,7 @@ require_relative "../config/environment.rb"
 require 'active_support/inflector'
 
 class InteractiveRecord
-  
+
   def self.table_name
     self.to_s.downcase.pluralize
   end
@@ -50,6 +50,13 @@ class InteractiveRecord
 
   def self.find_by_name(name)
     sql = "SELECT * FROM #{self.table_name} WHERE name = '#{name}'"
+    DB[:conn].execute(sql)
+  end
+
+  def self.find_by(attr={})
+    value = attr.values.first
+    sanitized_value = value.class.to_s
+    sql = "SELECT * FROM #{self.table_name} WHERE #{attr.keys.first} = #{sanitized_value}"
     DB[:conn].execute(sql)
   end
 
